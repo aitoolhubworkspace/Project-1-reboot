@@ -40,7 +40,7 @@ class Message(Base):
     from_user_id = Column(Integer)
     to_user_id = Column(Integer)
     message_text = Column(Text)
-    message_type = Column(String(50))  # text, image, etc.
+    message_type = Column(String(50))
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
     is_reported = Column(Boolean, default=False)
 
@@ -53,11 +53,13 @@ class AdminLog(Base):
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
 
 class Database:
-    def __init__(self, db_url):
-        self.engine = create_engine(db_url)
+    def __init__(self, db_url=None):
+        # Use SQLite for Replit
+        self.engine = create_engine('sqlite:///chatbot.db')
         Base.metadata.create_all(self.engine)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
+        print("✅ SQLite Database connected successfully")
     
     def add_user(self, user_data):
         user = User(**user_data)
