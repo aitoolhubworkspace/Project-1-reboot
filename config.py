@@ -4,13 +4,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config:
-    # Telegram Bot Token
+    # Telegram Bot Token - for Replit
     BOT_TOKEN = os.getenv('BOT_TOKEN')
     
-    # Database
-    DATABASE_URL = os.getenv('DATABASE_URL')
+    # Database - Use SQLite for Replit
+    DATABASE_URL = 'sqlite:///chatbot.db'
     
-    # Admin credentials (for 2 team members)
+    # Admin credentials
     ADMINS = {
         'admin1': {'password': 'admin123', 'name': 'Team Member 1'},
         'admin2': {'password': 'admin456', 'name': 'Team Member 2'}
