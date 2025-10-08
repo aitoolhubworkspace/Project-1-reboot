@@ -268,8 +268,12 @@ class AnonymousChatBot:
         else:
             await update.message.reply_text("❌ You're not in an active chat.")
 
-def main():
-    # Create bot application
+def setup_bot():
+    """Setup and run the bot for Replit"""
+    if not Config.BOT_TOKEN:
+        print("❌ BOT_TOKEN not set! Please add it in Replit Secrets")
+        return
+    
     application = Application.builder().token(Config.BOT_TOKEN).build()
     
     bot = AnonymousChatBot()
@@ -281,8 +285,5 @@ def main():
     application.add_handler(CallbackQueryHandler(bot.button_handler, pattern='^(start_chat|set_gender|help)$'))
     application.add_handler(CallbackQueryHandler(bot.gender_handler, pattern='^gender_'))
     
-    # Start the bot
+    print("✅ Bot setup complete - Starting polling...")
     application.run_polling()
-
-if __name__ == '__main__':
-    main()
